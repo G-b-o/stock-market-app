@@ -1,6 +1,6 @@
 namespace Api.Dtos.Stock;
 
-public class StockRequestDto
+public class CreateStockRequestDto
 {
     public string Symbol { get; set; } = string.Empty;
     public string CompanyName { get; set; } = string.Empty;

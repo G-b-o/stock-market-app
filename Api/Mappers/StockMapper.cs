@@ -19,16 +19,16 @@ public static class StockMapper
         };
     }
 
-    public static Stock ToStock(this StockRequestDto stockRequestDto)
+    public static Stock ToStock(this CreateStockRequestDto createStockRequestDto)
     {
         return new Stock
         {
-            CompanyName = stockRequestDto.CompanyName,
-            LastDiv = stockRequestDto.LastDiv,
-            MarketCap = stockRequestDto.MarketCap,
-            Symbol = stockRequestDto.Symbol,
-            Industry = stockRequestDto.Industry,
-            Purchase = stockRequestDto.Purchase
+            CompanyName = createStockRequestDto.CompanyName,
+            LastDiv = createStockRequestDto.LastDiv,
+            MarketCap = createStockRequestDto.MarketCap,
+            Symbol = createStockRequestDto.Symbol,
+            Industry = createStockRequestDto.Industry,
+            Purchase = createStockRequestDto.Purchase
         };
     }
 }
