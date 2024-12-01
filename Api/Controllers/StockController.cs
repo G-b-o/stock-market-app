@@ -1,4 +1,5 @@
 using Api.Data;
+using Api.Dtos.Stock;
 using Api.Mappers;
 using Microsoft.AspNetCore.Mvc;
 
@@ -29,5 +30,17 @@ public class StockController : ControllerBase
         var stock = _context.Stocks.Find(id);
 
         return stock == null ? NotFound() : Ok(stock.ToStockDto());
+    }
+
+    [HttpPost]
+    public IActionResult Create([FromBody] StockRequestDto stockRequestDto)
+    {
+        var stock = stockRequestDto.ToStock();
+        
+        _context.Stocks.Add(stock);
+        _context.SaveChanges();
+        
+        var dto = stock.ToStockDto();
+        return CreatedAtAction(nameof(GetById), new { id = dto.Id }, dto);
     }
 }
