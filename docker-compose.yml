@@ -1,0 +1,38 @@
+services:
+  postgres:
+    container_name: maket_app_postgres_db
+    image: postgres
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      PGDATA: /data/postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres:/data/postgres
+    networks:
+      - market_app_net
+    restart: unless-stopped
+
+  pgadmin:
+    container_name: market_app_pgadmin
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: pgadmin4@pgadmin.org
+      PGADMIN_DEFAULT_PASSWORD: admin
+      PGADMIN_CONFIG_SERVER_MODE: "False"
+    volumes:
+      - pgadmin:/var/lib/pgadmin
+    ports:
+      - "5050:80"
+    networks:
+      - market_app_net
+    restart: unless-stopped
+
+networks:
+  market_app_net:
+    driver: bridge
+
+volumes:
+  postgres:
+  pgadmin:
