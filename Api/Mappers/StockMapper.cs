@@ -16,6 +16,7 @@ public static class StockMapper
             CompanyName = stock.CompanyName,
             LastDiv = stock.LastDiv,
             MarketCap = stock.MarketCap,
+            Comments = stock.Comments.Select(c => c.ToCommentDto()).ToList()
         };
     }
 
