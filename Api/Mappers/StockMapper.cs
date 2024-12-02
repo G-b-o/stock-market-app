@@ -31,4 +31,17 @@ public static class StockMapper
             Purchase = createStockRequestDto.Purchase
         };
     }
+    
+    public static Stock ToStock(this UpdateStockRequestDto updateStockRequestDto)
+    {
+        return new Stock
+        {
+            CompanyName = updateStockRequestDto.CompanyName,
+            LastDiv = updateStockRequestDto.LastDiv,
+            MarketCap = updateStockRequestDto.MarketCap,
+            Symbol = updateStockRequestDto.Symbol,
+            Industry = updateStockRequestDto.Industry,
+            Purchase = updateStockRequestDto.Purchase
+        };
+    }
 }
