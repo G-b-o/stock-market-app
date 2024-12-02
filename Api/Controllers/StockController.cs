@@ -22,7 +22,7 @@ public class StockController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetAll()
     {
-        var stocks = await _stockRepo.GetAll();
+        var stocks = await _stockRepo.GetAllAsync();
         var stockDtos = stocks.Select(s => s.ToStockDto());
         
         return Ok(stockDtos);
@@ -31,7 +31,7 @@ public class StockController : ControllerBase
     [HttpGet("{id}")]
     public async Task<IActionResult> GetById([FromRoute] int id)
     {
-        var stock = await _stockRepo.GetById(id);
+        var stock = await _stockRepo.GetByIdAsync(id);
 
         return stock == null ? NotFound() : Ok(stock.ToStockDto());
     }
@@ -41,7 +41,7 @@ public class StockController : ControllerBase
     {
         var createStockDto = stockRequestDto.ToStock();
         
-        var createdStock = await _stockRepo.Create(createStockDto);
+        var createdStock = await _stockRepo.CreateAsync(createStockDto);
         
         var dto = createdStock.ToStockDto();
         return CreatedAtAction(nameof(GetById), new { id = dto.Id }, dto);
@@ -52,7 +52,7 @@ public class StockController : ControllerBase
     {
         var stockToUpdate = stockRequestDto.ToStock();
         
-        var updatedStock = await _stockRepo.Update(id, stockToUpdate);
+        var updatedStock = await _stockRepo.UpdateAsync(id, stockToUpdate);
         
         return updatedStock == null ? NotFound() : Ok(updatedStock.ToStockDto());
     }
@@ -60,7 +60,7 @@ public class StockController : ControllerBase
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete([FromRoute] int id)
     {
-        var stock = await _stockRepo.Delete(id);
+        var stock = await _stockRepo.DeleteAsync(id);
         
         if (stock == null)
         {

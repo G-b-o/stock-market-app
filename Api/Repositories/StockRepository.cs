@@ -14,17 +14,17 @@ public class StockRepository : IStockRepository
         _context = context;
     }
     
-    public async Task<List<Stock>> GetAll()
+    public async Task<List<Stock>> GetAllAsync()
     {
         return await _context.Stocks.ToListAsync();
     }
 
-    public async Task<Stock?> GetById(int id)
+    public async Task<Stock?> GetByIdAsync(int id)
     {
         return await _context.Stocks.FindAsync(id);
     }
 
-    public async Task<Stock> Create(Stock entity)
+    public async Task<Stock> CreateAsync(Stock entity)
     {
         await _context.Stocks.AddAsync(entity);
         await _context.SaveChangesAsync();
@@ -32,9 +32,9 @@ public class StockRepository : IStockRepository
         return entity;
     }
 
-    public async Task<Stock?> Update(int id, Stock entity)
+    public async Task<Stock?> UpdateAsync(int id, Stock entity)
     {
-        var existingStock = await GetById(id);
+        var existingStock = await GetByIdAsync(id);
 
         if (existingStock == null)
         {
@@ -54,9 +54,9 @@ public class StockRepository : IStockRepository
         return existingStock;
     }
 
-    public async Task<Stock?> Delete(int id)
+    public async Task<Stock?> DeleteAsync(int id)
     {
-        var stock = await GetById(id);
+        var stock = await GetByIdAsync(id);
 
         if (stock == null)
         {

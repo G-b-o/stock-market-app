@@ -2,9 +2,9 @@ namespace Api.Interfaces;
 
 public interface IBaseRepository<TId, T>
 {
-    Task<List<T>> GetAll();
-    Task<T?> GetById(int id);
-    Task<T> Create(T entity);
-    Task<T?> Update(TId id, T entity);
-    Task<T?> Delete(TId id);
+    Task<List<T>> GetAllAsync();
+    Task<T?> GetByIdAsync(int id);
+    Task<T> CreateAsync(T entity);
+    Task<T?> UpdateAsync(TId id, T entity);
+    Task<T?> DeleteAsync(TId id);
 }
