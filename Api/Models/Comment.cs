@@ -11,7 +11,7 @@ namespace Api.Models
         public string Title { get; set; } = string.Empty;
         public string Content { get; set; } = string.Empty;
         public DateTime CreateAt { get; set; } = DateTime.UtcNow;
-        public int? StockId { get; set; }
-        public Stock? Stock { get; set; }
+        public int StockId { get; set; }
+        public Stock Stock { get; set; }
     }
 }

@@ -30,13 +30,34 @@ public class CommentRepository : ICommentRepository
         return entity;
     }
 
-    public Task<Comment?> UpdateAsync(int id, Comment entity)
+    public async Task<Comment?> UpdateAsync(int id, Comment entity)
     {
-        throw new NotImplementedException();
+        var existingComment = await GetByIdAsync(id);
+
+        if (existingComment == null)
+        {
+            return null;
+        }
+        
+        existingComment.Title = entity.Title;
+        existingComment.Content = entity.Content;
+        await _context.SaveChangesAsync();
+        
+        return existingComment;
     }
 
-    public Task<Comment?> DeleteAsync(int id)
+    public async Task<Comment?> DeleteAsync(int id)
     {
-        throw new NotImplementedException();
+        var comment = await GetByIdAsync(id);
+
+        if (comment == null)
+        {
+            return null;
+        }
+
+        _context.Comments.Remove(comment);
+        await _context.SaveChangesAsync();
+
+        return comment;
     }
 }
