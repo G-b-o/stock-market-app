@@ -24,14 +24,22 @@ public class StockRepository : IStockRepository
     {
         var stocks = _context.Stocks.Include(s => s.Comments).AsQueryable();
 
-        if (!string.IsNullOrEmpty(query.CompanyName))
+        if (!string.IsNullOrWhiteSpace(query.CompanyName))
         {
             stocks = stocks.Where(s => s.CompanyName.ToLower().Contains(query.CompanyName.ToLower()));
         }
 
-        if (!string.IsNullOrEmpty(query.Symbol))
+        if (!string.IsNullOrWhiteSpace(query.Symbol))
         {
             stocks = stocks.Where(s => s.Symbol.ToLower().Contains(query.Symbol.ToLower()));
+        }
+
+        if (!string.IsNullOrWhiteSpace(query.OrderBy))
+        {
+            if (query.OrderBy.Equals("Symbol", StringComparison.OrdinalIgnoreCase))
+            {
+                stocks = query.IsDescending ? stocks.OrderByDescending(s => s.Symbol) : stocks.OrderBy(s => s.Symbol);
+            }
         }
         
         return stocks.ToListAsync();
