@@ -39,6 +39,11 @@ public class StockController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] CreateStockRequestDto stockRequestDto)
     {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+        
         var createStockDto = stockRequestDto.ToStock();
         
         var createdStock = await _stockRepo.CreateAsync(createStockDto);
@@ -50,6 +55,11 @@ public class StockController : ControllerBase
     [HttpPut("{id}")]
     public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateStockRequestDto stockRequestDto)
     {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+        
         var stockToUpdate = stockRequestDto.ToStock();
         
         var updatedStock = await _stockRepo.UpdateAsync(id, stockToUpdate);

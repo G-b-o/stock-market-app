@@ -37,6 +37,11 @@ public class CommentController : ControllerBase
     [HttpPost("{stockId}")]
     public async Task<IActionResult> Create([FromRoute] int stockId, [FromBody] CreateCommentRequestDto commentDto)
     {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);    
+        }
+        
         if (!await _stockRepository.IsExistAsync(stockId))
         {
             return BadRequest();
@@ -51,6 +56,11 @@ public class CommentController : ControllerBase
     [HttpPut("{id}")]
     public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateCommentRequestDto commentDto)
     {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);    
+        }
+        
         var comment = commentDto.ToComment();
         
         var updatedComment = await _commentRepository.UpdateAsync(id, comment);
