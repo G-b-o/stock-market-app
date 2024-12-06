@@ -42,6 +42,9 @@ public class StockRepository : IStockRepository
             }
         }
         
+        var skip = query.PageSize * (query.PageNumber - 1);
+        stocks = stocks.Skip(skip).Take(query.PageSize);
+        
         return stocks.ToListAsync();
     }
 
