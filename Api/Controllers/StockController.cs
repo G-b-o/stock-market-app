@@ -1,5 +1,6 @@
 using Api.Data;
 using Api.Dtos.Stock;
+using Api.Helpers.Stock;
 using Api.Interfaces;
 using Api.Mappers;
 using Api.Repositories;
@@ -20,9 +21,9 @@ public class StockController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetAll()
+    public async Task<IActionResult> GetAll([FromQuery] QueryObject queryObject)
     {
-        var stocks = await _stockRepo.GetAllAsync();
+        var stocks = await _stockRepo.GetAllAsync(queryObject);
         var stockDtos = stocks.Select(s => s.ToStockDto());
         
         return Ok(stockDtos);

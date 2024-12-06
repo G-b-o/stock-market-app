@@ -1,4 +1,5 @@
 using Api.Data;
+using Api.Helpers.Stock;
 using Api.Interfaces;
 using Api.Models;
 using Microsoft.EntityFrameworkCore;
@@ -17,6 +18,23 @@ public class StockRepository : IStockRepository
     public async Task<List<Stock>> GetAllAsync()
     {
         return await _context.Stocks.Include(s => s.Comments).ToListAsync();
+    }
+    
+    public Task<List<Stock>> GetAllAsync(QueryObject query)
+    {
+        var stocks = _context.Stocks.Include(s => s.Comments).AsQueryable();
+
+        if (!string.IsNullOrEmpty(query.CompanyName))
+        {
+            stocks = stocks.Where(s => s.CompanyName.ToLower().Contains(query.CompanyName.ToLower()));
+        }
+
+        if (!string.IsNullOrEmpty(query.Symbol))
+        {
+            stocks = stocks.Where(s => s.Symbol.ToLower().Contains(query.Symbol.ToLower()));
+        }
+        
+        return stocks.ToListAsync();
     }
 
     public async Task<Stock?> GetByIdAsync(int id)
